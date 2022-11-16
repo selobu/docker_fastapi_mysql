@@ -1,0 +1,4 @@
+{
+        "esbonio.sphinx.buildDir": "build",
+        "esbonio.sphinx.confDir": "source"
+}

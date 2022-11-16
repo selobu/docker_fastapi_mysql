@@ -1,0 +1,12 @@
+version: '1'
+services:
+  fastapi:
+    build:
+      # build from Dockerfile
+      context: .
+      dockerfile: Dockerfile
+    ports:
+     - 80:80
+    volumes:
+     - /app
+     - .:/app

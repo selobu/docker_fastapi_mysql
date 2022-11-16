@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]   
+pydantic[email]
+python-multipart # This is because OAuth2 uses "form data" for sending the username and password.
+gunicorn
+sqlalchemy
+sqlmodel
+PyMySQL

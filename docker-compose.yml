@@ -1,0 +1,52 @@
+version: '1.1'
+services:
+  maria-database:
+    # https://onexlab-io.medium.com/docker-compose-mariadb-5eb7a37426a2
+    restart: on-failure
+    #  variables de entorno
+    environment:
+      MYSQL_ROOT_PASSWORD: adminpassword123
+      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: ventas2022
+      MYSQL_USER: adminuser
+      MYSQL_PASSWORD: adminuser123
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    volumes: 
+      # execute the sql script files in init path
+        - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      # tengo el puerto del pc ocupado con otro servicio
+      - "3307:3306"
+    healthcheck :
+      test: ["CMD", "service","mariadb","status"]
+      interval: 5s
+      # waiting the database to start
+      timeout: 10s
+      retries: 5
+  backend:
+    # reatart server on failure
+    restart: on-failure
+    # image mlocation to build
+    environment:
+      MYSQL_ROOT_PASSWORD: adminpassword123
+      MYSQL_ROOT_USER: root
+      MYSQL_USER: adminuser
+      MYSQL_PASSWORD: adminuser123
+      MYSQL_DATABASE: ventas2022
+      MYSQL_PORT: 3306
+      MYSQL_HOST: maria-database
+    build: 
+      context: ./backend/.
+      # allows me to specify the docker file
+      dockerfile: Dockerfile
+    # open ports
+    ports:
+      - "80:80"
+    volumes:
+      - ./backend/app/:/app
+    depends_on:
+      # notice: these lines don't start with "-"
+      maria-database:
+        condition: service_healthy

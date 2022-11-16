@@ -1,0 +1,4 @@
+.Dockerfile.un~
+Dockerfile~
+*.tar
+*.pyc

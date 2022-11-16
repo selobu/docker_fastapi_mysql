@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+pydantic = {extras = ["email"], version = "*"}
+python-multipart = "*"
+sqlmodel = "==0.0.8"
+sqlalchemy2-stubs = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
